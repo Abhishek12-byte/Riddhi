@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Riddhi!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            background-color: #fce4ec; /* Light pink background */
+            color: #880e4f; /* Dark pink text color */
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d81b60; /* Vibrant pink for the main heading */
+            margin-bottom: 10px;
+        }
+
+        p.message {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #c2185b; /* Slightly darker pink for the message */
+        }
+
+        #game-area {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 2px dashed #f48fb1; /* Dashed pink border for game area */
+            margin: 0 auto;
+            border-radius: 10px;
+            overflow: hidden; /* Prevent heart from going outside initially */
+        }
+
+        #heart {
+            position: absolute;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease-out; /* Smooth movement when heart is clicked */
+            user-select: none; /* Prevent text selection on heart click */
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ad1457; /* Magenta for the game result text */
+        }
+
+        #play-again {
+            display: none; /* Hidden until the game is won */
+            background-color: #d81b60; /* Vibrant pink for the button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        #play-again:hover {
+            background-color: #ad1457; /* Darker pink on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>Happy Birthday Riddhi! 🎂🎈</h1>
+        <p class="message">Wishing you a day filled with laughter, love, and joy. <br> You won my heart! 💖</p>
+
+        <p style="margin-bottom: 15px;">**Click the dancing heart to win!**</p>
+        <div id="game-area">
+            <div id="heart">❤️</div>
+        </div>
+        
+        <p id="result"></p>
+        <button id="play-again" onclick="resetGame()">Play Again</button>
+
+    </div>
+
+    <script>
+        const heart = document.getElementById('heart');
+        const gameArea = document.getElementById('game-area');
+        const result = document.getElementById('result');
+        const playAgainBtn = document.getElementById('play-again');
+        const winCondition = 5; // Click the heart 5 times to win
+        let clickCount = 0;
+
+        // Function to move the heart to a new random position within the game area
+        function moveHeart() {
+            const maxX = gameArea.clientWidth - heart.clientWidth;
+            const maxY = gameArea.clientHeight - heart.clientHeight;
+
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            heart.style.left = randomX + 'px';
+            heart.style.top = randomY + 'px';
+        }
+
+        // Initialize heart position on page load
+        moveHeart();
+
+        // Add click event listener to the heart
+        heart.addEventListener('click', () => {
+            clickCount++;
+            if (clickCount < winCondition) {
+                result.textContent = `Keep going! You've clicked it ${clickCount} out of ${winCondition} times.`;
+                moveHeart();
+            } else {
+                result.textContent = "You WON my heart! 🥰 Happy Birthday, Riddhi!";
+                heart.style.display = 'none'; // Hide the heart
+                playAgainBtn.style.display = 'inline-block'; // Show "Play Again" button
+            }
+        });
+
+        // Function to reset the game
+        function resetGame() {
+            clickCount = 0;
+            result.textContent = "";
+            heart.style.display = 'block'; // Show the heart again
+            playAgainBtn.style.display = 'none'; // Hide "Play Again" button
+            moveHeart(); // Move to a new starting position
+        }
+    </script>
+</body>
+</html>
